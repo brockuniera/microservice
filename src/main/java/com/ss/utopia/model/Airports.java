@@ -35,6 +35,11 @@ public class Airports implements Serializable{
     
     
 	@Override
+	public String toString() {
+		return "Airports [airportCode=" + airportCode + ", city=" + city + ", name=" + name + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -62,7 +67,6 @@ public class Airports implements Serializable{
 	public String getAirportCode() {
 		return airportCode;
 	}
-
 	public void setAirportCode(String airportCode) {
 		this.airportCode = airportCode;
 	}
