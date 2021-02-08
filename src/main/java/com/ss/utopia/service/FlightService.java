@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.ss.utopia.dao.AirportDAO;
-import com.ss.utopia.model.Airports;
+import com.ss.utopia.dao.FlightDAO;
+import com.ss.utopia.model.Flights;
 
 /**
  * @author jordandivina
@@ -19,24 +20,32 @@ import com.ss.utopia.model.Airports;
  */
 
 @Service
-public class AirportService {
+public class FlightService {
 	
 	@Autowired
-	private AirportDAO airportDAO;
+	private FlightDAO flightDAO;
 
-	public List<Airports> getAllAirports() {
-		return airportDAO.findAll();
+	public List<Flights> getAllFlights() {
+		return flightDAO.findAll();
+	}
+	
+	public List<Flights> getAllFlightsDepartingFromAirport(String airportid){
+		return flightDAO.getAllFlightsDepartingFromAirport(airportid);
+	}
+	
+	public List<Flights> getAllFlightsArrivingToAirport(String airportid){
+		return flightDAO.getAllFlightsArrivingToAirport(airportid);
 	}
 
-	public List<Airports> getSpecificAirport(String airportIdentifier) {
+	public List<Flights> getSpecificAirport(String airportIdentifier) {
 		List<String> tempList = new ArrayList<String>();
 		tempList.add(airportIdentifier);
-		return airportDAO.findAllById(tempList);
+		return flightDAO.findAllById(tempList);
 	}
 
-	public String addAirport(Airports newAirport) {
+	public String addAirport(Flights newAirport) {
 		try {
-			airportDAO.save(newAirport);
+			flightDAO.save(newAirport);
 			return "Success in adding" + newAirport.toString();
 		}
 		catch(Exception e){
@@ -44,9 +53,9 @@ public class AirportService {
 		}
 	}
 
-	public String updateAirport(Airports newAirport) {
+	public String updateAirport(Flights newAirport) {
 		try {
-			airportDAO.save(newAirport);
+			flightDAO.save(newAirport);
 			return "Updated " + newAirport.toString();
 		}
 		catch(Exception e){
@@ -54,9 +63,9 @@ public class AirportService {
 		}
 	}
 
-	public String deleteAirport(Airports newAirport) {
+	public String deleteAirport(Flights newAirport) {
 		try {
-			airportDAO.delete(newAirport);
+			flightDAO.delete(newAirport);
 			return "Deleted " + newAirport.toString();
 		}
 		catch(DataIntegrityViolationException e){
@@ -66,4 +75,6 @@ public class AirportService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not delete " + newAirport.toString());
 		}
 	}
+
+
 }

@@ -18,9 +18,6 @@ import javax.persistence.Table;
 @Table(name="airports")
 public class Airports implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
     @Id
